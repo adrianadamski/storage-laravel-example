@@ -17,7 +17,7 @@ class StorageItem extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'qty' => $this->qty,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

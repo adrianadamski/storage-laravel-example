@@ -3,34 +3,15 @@
 namespace App\Services;
 
 use App\Models\StorageItem;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Validator;
 
 class StorageItemService
 {
     public function getStorageItemsByStorageId(int $storageId): Collection
     {
         return StorageItem::where('storage_id', $storageId)->get();
-    }
-
-    public function getActiveActivities(): Collection
-    {
-        return $this->repository->getActiveActivities();
-    }
-
-    public function updateActivities(array $activities): bool
-    {
-        foreach ($activities['name'] as $id => $name) {
-            $this->repository->update($id, [
-                'act_name' => $name,
-                'act_display_name' => $activities['display_name'][$id] ?? '',
-                'act_active' => $activities['active'][$id] ?? 0,
-                'act_is_selectable' => $activities['active'][$id] ?? 0,
-            ]);
-        }
-
-        return true;
     }
 
     public function create(Request $request): StorageItem
@@ -47,7 +28,7 @@ class StorageItemService
         return $storageItem;
     }
 
-    public function validate(Request $request)
+    public function validate(Request $request): Validator
     {
         return $this->validateRequest($request, [
             'name' => 'required',
@@ -56,7 +37,7 @@ class StorageItemService
         ]);
     }
 
-    public function validateQty(Request $request)
+    public function validateQty(Request $request): Validator
     {
         return $this->validateRequest($request, [
             'qty' => 'required|numeric',
@@ -64,7 +45,7 @@ class StorageItemService
         ]);
     }
 
-    protected function validateRequest(Request $request, array $rules)
+    protected function validateRequest(Request $request, array $rules): Validator
     {
         return Validator::make($request->all(), $rules);
     }

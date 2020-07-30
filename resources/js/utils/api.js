@@ -1,6 +1,6 @@
 export const apiUrl = process.env['MIX_REACT_APP_API_URL'];
 
-export const client = async (endpoint, { body, ...config } = {}) => {
+export const client = async (endpoint, {body, ...config} = {}) => {
     const headers = {
         'Content-Type': 'application/json',
         'token': '123456',
@@ -12,7 +12,7 @@ export const client = async (endpoint, { body, ...config } = {}) => {
 
     const response = await fetch(`${apiUrl}/${endpoint}`, {
         method: config.method || 'GET',
-        headers: { ...headers, ...config.headers },
+        headers: {...headers, ...config.headers},
         ...config,
     });
 

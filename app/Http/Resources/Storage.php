@@ -16,7 +16,7 @@ class Storage extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'created_at' => $this->created_at->format(\DateTime::ISO8601),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }
